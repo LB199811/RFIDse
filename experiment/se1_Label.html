@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>标签与读卡器</title>
+    <script type="text/javascript" src="../JS/start.js"></script>
+    <style type="text/css">
+        *{
+            margin: 0 auto;
+            --gbc : #005bc3;
+            --gbchover:  #68b92e;
+            font-family: 华文宋体;
+        }
+        .par{
+            display: grid;
+            grid-template-columns: 60% 40%;
+            /*display: inline-block;*/
+            /*writing-mode: vertical-lr;*/
+        }
+        main{
+            /*display: block;*/
+            /*writing-mode: vertical-lr;*/
+            justify-items: center;
+            justify-content: center;
+
+            /*display: grid;*/
+            /*grid-template-columns: repeat(1,60%);*/
+            /*grid-template-rows: repeat(3,10% 90% 10%);*/
+            /*项目在主轴上的居中对齐*/
+            /*justify-content: center;*/
+            /*项目在交叉轴上居中对齐。*/
+            /*align-items: center;*/
+        }
+        .mainCanvas{
+            width: 600px;
+            height: 600px;
+            border: 3px solid var(--gbc);
+            border-radius: 3px;
+            background: snow;
+            cursor: pointer;
+        }
+        img{
+            align-self: center;
+            /*transform: scale(.3);*/
+            cursor: pointer;
+            margin: 0 auto;
+            width: 92px;
+            height: 60px;
+        }
+        label{
+            writing-mode: horizontal-tb;
+            justify-items: center;
+        }
+        .showAndExp{
+            width: 60px;
+            border: 3px solid var(--gbc);
+        }
+        option{
+            cursor: pointer;
+            color: 3px solid var(--gbchover);
+        }
+        .showAndExp:hover{
+            border: 3px solid var(--gbchover);
+        }
+        .allKindsOfTag{
+            width: auto;
+            border: 3px solid var(--gbc);
+        }
+        .sidebar{
+            height: 700px;
+            width: 400px;
+            border: 3px solid var(--gbc);
+            border-radius: 3px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+
+<div class="par">
+    <main>
+
+        <img alt="inner" src="../images/inner.png" id="showInner"/>
+        <canvas class="mainCanvas" id="canvas" width="600px" height="600px"></canvas>
+        <label>
+            <select class="showAndExp">
+                <option value ="演示">演示</option>
+                <option value ="实验">实验</option>
+            </select>
+
+            <select class="allKindsOfTag">
+                <option value ="盘形">盘形</option>
+                <option value ="玻璃外壳">玻璃外壳</option>4
+                <option value="钥匙和钥匙扣">钥匙和钥匙扣</option>
+                <option value="ID-1 型非接触IC卡">ID-1 型非接触IC卡</option>
+                <option value="智能标签">智能标签</option>
+                <option value="片上线圈">片上线圈</option>
+            </select>
+        </label>
+
+
+    </main>
+    <div class="sidebar">
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var canvas = document.getElementById("canvas");
+    var c= canvas.getContext('2d');
+    var showAndExp = document.querySelector(".showAndExp");
+    var allKindsOfTag = document.querySelector(".allKindsOfTag");
+    var showInner = document.getElementById("showInner");
+    console.log(showAndExp.value);
+    console.log(allKindsOfTag.value);
+    allKindsOfTag.addEventListener("change",function CanvasBook() {
+        //演示状态：画出内容
+        if(showAndExp.value === "演示"){
+            //先清空画布
+            canvas.height = canvas.height;
+            if(allKindsOfTag.value === "盘形") {
+                drawPlate();
+            }
+            if(allKindsOfTag.value === "ID-1 型非接触IC卡") {
+                drawICCard();
+            }if(allKindsOfTag.value === "智能标签") {
+                drawSmartTag();
+            }if(allKindsOfTag.value === "钥匙和钥匙扣") {
+                drawKeyTag();
+
+            }if(allKindsOfTag.value === "玻璃外壳") {
+                drawGlassHousing();
+
+            }
+        }
+        //实验状态，标出底板，从sidebar拖入
+        else if(showAndExp.value === "实验"){
+
+        }
+    })
+    showInner.onclick = function(){
+        //先清空画布
+        canvas.height = canvas.height;
+        if(allKindsOfTag.value === "ID-1 型非接触IC卡"){
+            drawICCardInner();
+        }
+        if(allKindsOfTag.value === "智能标签"){
+            drawSmartTag();
+        }
+        if(allKindsOfTag.value === "钥匙和钥匙扣"){
+            drawKeyTagInner();
+        }
+        if(allKindsOfTag.value === "玻璃外壳"){
+            drawGlassHousingInner();
+        }
+    }
+    showInner.onauxclick = function(){
+        //先清空画布
+        canvas.height = canvas.height;
+        if(allKindsOfTag.value === "ID-1 型非接触IC卡"){
+            drawICCard();
+        }
+        if(allKindsOfTag.value === "钥匙和钥匙扣"){
+            drawKeyTag();
+        }
+        if(allKindsOfTag.value === "玻璃外壳"){
+            drawGlassHousing();
+        }
+        if(allKindsOfTag.value === ""){
+
+        }
+    }
+
+    //ID-1 型非接触IC卡
+    function drawICCard() {
+        //外框
+        drawRoundedRectangle(20,110,560,380,20,3,"white");
+        /*c.strokeStyle = "white";
+        c.lineWidth = "2px";
+        c.stroke();
+        //上下左右
+        drawLine(30,110,570,110,"white",3);
+        drawLine(30,490,570,490,"white",3);
+        drawLine(20,120,20,480,"white",3);
+        drawLine(580,120,580,480,"white",3);
+        //∠A∠B∠C∠D 1/4圆弧
+        c.beginPath();
+        c.arc(30,120,10,Math.PI ,(Math.PI / 2)*3);
+        c.strokeStyle = "white";
+        c.stroke();
+        c.beginPath();
+        c.arc(570,120,10,(Math.PI / 2)*3,0);
+        c.strokeStyle = "white";
+        c.stroke();
+        c.beginPath();
+        c.arc(30,480,10,Math.PI / 2,Math.PI);
+        c.strokeStyle = "white";
+        c.stroke();
+        c.beginPath();
+        c.arc(570,480,10,0,Math.PI / 2);
+        c.strokeStyle = "white";
+        c.stroke();*/
+        //横幅下标线
+        drawLine(20,200,580,200,"var(--gbc)",5);
+        //画logo
+        c.beginPath();
+        c.arc(80,155,35,0,Math.PI * 2);
+        c.strokeStyle = "#005bc3";
+        c.stroke();
+        var logo = new Image();
+        logo.src = "../images/logo0.png";
+        logo.onload = function drawLogo(){
+            c.drawImage(this,45,120,70,70);
+        }
+        //西华大学
+        c.font='40px 楷体 ';
+        c.fillText('西华大学',170,150);
+
+        //xhu
+        c.font='15px Times'
+        c.fillText('Xihua Univeristy',200,190);
+
+        //校园卡
+        c.font='20px songti '
+        c.fillText('校园卡',520,180);
+        //封面
+        var face = new Image();
+        face.src = "../images/tagFace_radius.png";
+        face.style.borderRadius = "10px";
+        face.onload =function drawFace(){
+            c.drawImage(this,20,200,560,290);
+        }
+    }
+    //D-1 型非接触IC卡 内部
+    function drawICCardInner() {
+        //外框
+        /*c.rect(20,110,560,380);
+        c.strokeStyle = "white";
+        c.lineWidth = "2px";
+        c.stroke();*/
+        drawRoundedRectangle(20,110,560,380,20,3,"white");
+        //上
+        //drawLine(60,200,540,200,"#7F4C30",3);
+
+        //画芯片
+        c.beginPath();
+        c.rect(500,290,50,25);
+        c.strokeStyle = "gold";
+        c.stroke();
+        c.closePath();
+        //画线圈
+        drawCoil("rect");
+    }
+    //玻璃外壳
+    function drawGlassHousing() {
+        drawRoundedRectangle(40,200,520,120,65,5,"#A8A8A8",false);
+    }
+    //玻璃外壳内部
+    function drawGlassHousingInner() {
+        drawRoundedRectangle(40,200,520,120,65,5,'#A8A8A8',false);
+        drawRect(60,240,320,40);
+        drawCircleORArc(80,240,20,Math.PI,Math.PI * 2,"#A26047",false);
+        drawLine(100,240,100,280);
+        drawCircleORArc(120,280,20,0,Math.PI,"#A26047",false);
+        drawCircleORArc(160,240,20,Math.PI,Math.PI * 2,"#A26047",false);
+        drawLine(180,240,180,280);
+        drawCircleORArc(200,280,20,0,Math.PI,"#A26047",false);
+        drawCircleORArc(240,240,20,Math.PI,Math.PI * 2,"#A26047",false);
+        drawLine(260,240,260,280);
+        drawCircleORArc(280,280,20,0,Math.PI,"#A26047",false);
+        drawCircleORArc(320,240,20,Math.PI,Math.PI * 2,"#A26047",false);
+        drawLine(340,240,340,280);
+        drawCircleORArc(360,280,20,0,Math.PI,"#A26047",false);
+        drawCoilS(61,240,1,40);
+        //印刷电路板(PCB)
+        drawRect(380,270,160,10,"#01663C",true);
+        // 电容器芯片
+        drawRect(400,260,80,10,"black");
+        drawRect(420,260,40,10,"#0C0E0D",true);
+
+        // 芯片
+        drawRect(490,260,40,10,"black",true);
+    }
+
+    //盘形标签
+    function drawPlate() {
+        x = canvas.height  / 2;
+        y = canvas.width/ 2;
+        console.log(x,y);
+        drawCircleORArc(x,y,200,0,Math.PI * 2,"black");
+        c.fillStyle = "black";
+        c.fill();
+        drawCircleORArc(x,y,20,0,Math.PI * 2,"#AFAB95",true,false);
+    }
+    //钥匙或钥匙扣
+    function drawKeyTag() {
+        //画三角形
+        drawTriangle(256,105,496,337,565,37,256,105);
+        //芯片位置
+        drawCircleORArc(300,300,200,0,Math.PI * 2,"#005bc3",true);
+        //孔 钥匙圈
+        drawCircleORArc(525,81,20,0,Math.PI * 2,"#CDC9C9",true);
+        drawCircleORArc(549,105,40,0,Math.PI * 2,"#E4E3E9",false);
+    }
+    //钥匙或钥匙扣内部
+    function drawKeyTagInner() {
+        drawTriangle(256,105,496,337,565,37,256,105);
+        drawCircleORArc(canvas.height / 2,canvas.height / 2,200,0,Math.PI * 2,"white",true);
+        drawCoil("round");
+        //芯片连接线
+        drawLine(300,160,300,300,"#A26047",2);
+        //芯片
+        drawRoundedRectangle(277,288,50,25,2,1,"#ccc",true);
+        drawCircleORArc(525,81,20,0,Math.PI * 2,"#CDC9C9",true);
+        drawCircleORArc(549,105,40,0,Math.PI * 2,"#E4E3E9",false);
+    }
+
+    //画线
+    function drawLine(x1,y1,x2,y2,color,width){
+        c.beginPath();
+        c.moveTo(x1,y1);
+        c.lineTo(x2,y2);
+        c.lineWidth = width
+        c.strokeStyle = color;
+        c.stroke();
+        c.closePath();
+    }
+    //画三角形
+    function drawTriangle(x1,y1,x2,y2,x3,y3,color){
+        c.beginPath();
+        c.moveTo(x1,y1);
+        c.lineTo(x2,y2);
+        c.lineTo(x3,y3);
+        c.lineTo(x1,y1);
+        c.strokeStyle = color;
+        c.stroke();
+        c.fillStyle = "#005bc3";
+        c.fill();
+        c.closePath();
+    }
+    //绕与铁氧体的线圈
+    function drawCoilS(x,y,r,h){
+        drawCircleORArc(x+1,y+1,r,Math.PI,Math.PI * 2,"#A26047",false);
+        //竖线
+        drawLine(x+1,y+1,x+1,y+1+h,"#A26047",0.1);
+        drawCircleORArc(x+1,y+2+h,r,0,Math.PI,"#A26047",false);
+        /*while (){
+
+        }*/
+        /*//半圆
+        drawCircleORArc(x,y,r,Math.PI,Math.PI * 2,"#A26047",false,false);
+        //竖线
+
+        //半圆
+        drawCircleORArc(x+r,y,r+w,Math.PI,Math.PI * 2,"#A26047",false,false);*/
+    }
+    //画矩形
+    function drawRect(x,y,w,h,color,fill) {
+        c.beginPath();
+        c.rect(x,y,w,h);
+        c.strokeStyle = color;
+        c.stroke();
+        c.closePath();
+        if(fill === true){
+            c.fillStyle = color;
+            c.fill();
+        }
+    }
+    //画线圈
+    function drawCoil(shape){
+        if(shape === "round"){
+            c.beginPath();
+            for (var k = 0; k < 10; k++) {
+                c.arc(300, 300, 150 - k, 0, Math.PI * 2)
+            }
+            c.strokeStyle = "#A26047";
+            c.stroke();
+            c.closePath();
+        }
+        else if(shape === "rect"){
+            for (var i = 0; i <= 10; i++) {
+                //芯片上
+                drawLine(520 + i, 290, 520 + i, 200, "#A26047", 0.5);
+                //芯片上1/4圆弧
+                c.beginPath();
+                c.arc(500, 200, 20 + i, 0, (Math.PI / 2) * 3, true);
+                c.strokeStyle = "#A26047";
+                c.lineWidth = "3px";
+                c.stroke();
+                c.closePath();
+                // 卡上
+                drawLine(500,180-i,100,180-i,"#A26047",0.5);
+                // 卡上左1/4圆弧
+                c.beginPath();
+                c.arc(100, 200, 20 + i,(Math.PI / 2) * 3,Math.PI, true);
+                c.strokeStyle = "#A26047";
+                c.lineWidth = "3px";
+                c.stroke();
+                c.closePath();
+                //卡左
+                drawLine(70 + i,200,70 + i,400,"#A26047",0.5);
+                // 卡左下1/4圆弧
+                c.beginPath();
+                c.arc(100, 400, 20 + i,Math.PI,Math.PI / 2,true);
+                c.strokeStyle = "#A26047";
+                c.lineWidth = "3px";
+                c.stroke();
+                c.closePath();
+                //卡下
+                drawLine(100,420 + i,500,420 + i,"#A26047",0.5);
+                // 卡下右1/4圆弧
+                c.beginPath();
+                c.arc(500, 400, 20 + i,Math.PI / 2,0,true);
+                c.strokeStyle = "#A26047";
+                c.lineWidth = "3px";
+                c.stroke();
+                c.closePath();
+                //芯片下
+                drawLine(520 + i, 400, 520 + i, 315, "#A26047", 0.5);
+            }
+        }
+    }
+    //画圆矩形
+    function drawRoundedRectangle(x,y,width,height,radius,lineWidth,color,fill){
+        //上下左右边线
+        drawLine(x + radius,y,x+width-radius,y,color,lineWidth);
+        drawLine(x + radius,y+height,x + width - radius,y + height,color,lineWidth);
+        drawLine(x,y + radius,x,y + height - radius,color,lineWidth);
+        drawLine(x + width,y + radius,x + width,y + height - radius,color,lineWidth);
+        //∠A∠B∠C∠D 1/4圆弧
+        drawCircleORArc(x + radius,y+radius,radius,Math.PI ,(Math.PI / 2)*3,color);
+        drawCircleORArc(x + width -radius,y+radius,radius,(Math.PI / 2)*3,0);
+        drawCircleORArc(x + radius,y + height -radius,radius,Math.PI / 2,Math.PI);
+        drawCircleORArc(x + width - radius,y + height -radius,radius,0,Math.PI / 2);
+        //填充
+        if(fill === true){
+            c.fillStyle = color;
+            //中
+            c.fillRect(x,y + radius,width,height - 2 * radius);
+            //上
+            c.fillRect(x+radius,y,width - 2 * radius,radius);
+            //下
+            c.fillRect(x + radius,y + height-radius,width - 2 * radius,radius);
+            //左上角1/4圆弧(半径逐渐减1，反复画，达到填充效果)
+            for(var i = 0;i <= radius;i++){
+                drawCircleORArc(x + radius, y + radius, radius - i, Math.PI, (Math.PI / 2) * 3);
+                drawCircleORArc(x + width - radius, y + radius, radius - i, (Math.PI / 2) * 3, 0);
+                drawCircleORArc(x + radius, y + height - radius, radius - i, Math.PI / 2, Math.PI);
+                drawCircleORArc(x + width - radius, y + height - radius - i, radius, 0, Math.PI / 2);
+            }
+        }
+    }
+    // 画圆形（根据参数画出圆弧或者圆形）
+    function drawCircleORArc(x,y,radius,sAngle,eAngle,color,f,clockwise) {
+        c.beginPath();
+        c.arc(x,y,radius,sAngle,eAngle,clockwise);
+        c.strokeStyle = color;
+        c.stroke();
+        c.closePath();
+        if(f === true){
+            c.fillStyle = color;
+            c.fill();
+        }
+    }
+    //画 智能标签1
+    function drawSmartTag(){
+        //背板
+        drawRoundedRectangle(20,80,80,320,10,3,"white",true);
+        //上芯
+        drawRoundedRectangle(25,90,70,70,5,3,"#494949",true);
+
+        //中间连接
+        //上部
+        drawLine(50,150,50,180,3,"#494949");
+        c.beginPath();
+        c.arc(53,180,3,Math.PI / 2,Math.PI);
+        c.strokeStyle = "#494949";
+        c.stroke();
+        c.closePath();
+        drawLine(53,183,80,183,3,"#494949");
+
+        c.beginPath();
+        c.arc(80,186,3,(Math.PI / 2) * 3,0);
+        c.strokeStyle = "#494949";
+        c.stroke();
+        c.closePath();
+        drawLine(83,186,83,200,3,"#494949");
+
+        c.beginPath();
+        c.arc(80,200,3,0,Math.PI / 2 );
+        c.strokeStyle = "#494949";
+        c.stroke();
+        c.closePath();
+        drawLine(80,203,35,203,3,"#494949");
+        c.beginPath();
+        c.arc(35,206,3,Math.PI,(Math.PI / 2) * 3);
+        c.strokeStyle = "#494949";
+        c.stroke();
+        c.closePath();
+        drawLine(32,206,32,230,3,"#494949");
+        c.beginPath();
+        c.arc(35,230,3,Math.PI / 2,Math.PI);
+        c.strokeStyle = "#494949";
+        c.stroke();
+        c.closePath();
+        drawLine(35,233,60,233,3,"#494949");
+        // 下部
+        drawLine(50,310,50,295,3,"#494949");
+        c.beginPath();
+        c.arc(53,295,3,Math.PI,(Math.PI*3) / 2);
+        c.strokeStyle = "#494949";
+        c.stroke();
+        c.closePath();
+        drawLine(53,292,80,292,3,"#494949");
+        c.beginPath();
+        c.arc(80,289,3,0,Math.PI / 2);
+        c.strokeStyle = "#494949";
+        c.stroke();
+        c.closePath();
+        drawLine(83,290,83,275,3,"#494949");
+        c.beginPath();
+        c.arc(80,275,3,(Math.PI / 2 ) * 3,0);
+        c.strokeStyle = "#494949";
+        c.stroke();
+        c.closePath();
+        drawLine(80,272,35,272,3,"#494949");
+        c.beginPath();
+        c.arc(35,269,3,Math.PI / 2 ,Math.PI);
+        c.strokeStyle = "#494949";
+        c.stroke();
+        c.closePath();
+        drawLine(32,269,32,250,3,"#494949");
+        drawLine(32,269,32,250,3,"#494949");
+        c.beginPath();
+        c.arc(35,250,3,Math.PI,(Math.PI/2) * 3);
+        c.strokeStyle = "#494949";
+        c.stroke();
+        c.closePath();
+        drawLine(33,247,60,247,3,"#494949");
+        //圆矩形线圈
+        drawRoundedRectangle(60,210,20,50,5,3,"#494949",false);
+
+        //下芯
+        drawRoundedRectangle(25,310,70,70,5,3,"#494949",true);
+
+    }
+    //画 智能标签2
+    function drawSmartTag2() {
+    }
+    canvas.onclick= function () {
+         console.log(event.offsetX,event.offsetY);
+     }/*
+    if(c.isPointInPath(event.offsetX,event.offsetY)){
+        c.strokeStyle = "#005bc3";
+        c.stroke();
+    }*/
+    const local = drawGlassHousing();
+    canvas.onmouseenter =function(){
+        if(local.isPointInPath(event.offsetX,event.offsetY)){
+            console.log("success");
+        }
+
+    }
+</script>
+</body>
+</html>

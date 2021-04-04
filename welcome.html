@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head>
+<style>
+ /*
+ body{ background-color:white; }
+ #canvasHtml5{border:1px solid red; }
+ #rlCanvas{border:1px solid #d3d3d3;}
+*/
+ canvas{
+	margin:0 auto;
+	border:2px solid white;
+	display:block;
+ }
+</style>
+<script>
+	
+	/*window.onload=(function(){
+	 // add a canvas element using javascript
+	 var canvas=document.createElement('canvas');
+	 canvas.id='canvasJavascript'
+	 document.body.appendChild(canvas);
+	}); // end $(function(){});*/
+	//画标签
+    function drawlabel() {
+
+
+        let c=document.getElementById("rlCanvas");
+        let ctx=c.getContext("2d");
+        let createdEllipse = (ctx, x, y, w, h, color) => {
+            let r = h / 2; // 圆半径
+            let l_w = Math.abs(w - h); // 线长度
+            ctx.beginPath();
+            ctx.moveTo(x+r, y);           // 创建开始点
+            ctx.lineTo(x+r+l_w,y);          // 创建水平线
+            ctx.arcTo(x+w,y,x+w,y+r,r); // 创建弧
+            ctx.arcTo(x+w,y+h,x+r+l_w,y+h,r); // 创建弧
+            ctx.lineTo(x+r,y+h);         // 创建垂直线
+            ctx.arcTo(x,y+h,x,y+r,r); // 创建弧
+            ctx.arcTo(x,y,x+r,y,r); // 创建弧
+            ctx.strokeStyle = color;
+            ctx.stroke();
+            ctx.clip();
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.restore();
+            ctx.closePath();
+            ctx.save();
+        }
+        createdEllipse(ctx, 10, 10, 60, 20, "blue");
+    }
+	/*function showInner(){
+		var canvas = document.querySelector("#cont");
+		var c = canvas.getContext('2d');
+
+		c.arc(110,110,20,0,Math.PI*2,false);
+		c.stroke();
+	}*/
+	
+</script>
+</head>
+<body>
+ <!-- add a canvas element using html -->
+ <canvas id="cont" width="500px" height="500px"></canvas>
+ <div style="background: red;border-radius: 10px;width: 30px;height: 30px" id="drawLabelFace" ></div>
+<!-- 画饭卡 -->
+ <script>
+     //显示封面
+     let drawLabelFace = document.getElementById("drawLabelFace");
+     //获取canvas标签
+     var canvas = document.querySelector("#cont");
+     //获取上下文对象
+     var c = canvas.getContext('2d');
+     //画线
+     function drawline(x1,y1,x2,y2,color,width){
+         c.beginPath();
+         c.moveTo(x1,y1);
+         c.lineTo(x2,y2);
+         c.lineWidth = width
+         c.strokeStyle = color;
+         c.stroke();
+         c.closePath();
+     }
+     drawLabelFace.addEventListener("click", function () {
+         drawLabelFace.innerText = "外";
+
+         //卡片四周
+         c.rect(100,100,300,200);
+         c.strokeStyle = 'grey';
+         c.stroke();
+
+         /*drawline(100,100,100,300,'grey',2);
+         drawline(100,300,400,300,'grey',2);
+         drawline(400,300,400,100,'grey',2);
+         drawline(400,100,100,100,'grey',2);*/
+         drawline(100,175,400,175,'grey',2);
+
+         //封面
+         var faceimg = new Image();
+         faceimg.src = 'labelface.jpg';
+         faceimg.onload = function(){
+             c.drawImage(this,100,175,300,125);
+         }
+         //西华大学汉字
+         c.font='40px kaiti ';
+         c.fillText('西华大学',170,150);
+         //xhu
+         c.font='15px Times'
+         c.fillText('Xihua Univeristy',170,170);
+         //校园卡
+         c.font='20px songti'
+         c.fillText('校园卡',330,170);
+         //logo区域
+         c.beginPath();
+         c.arc(140,140,30,0,Math.PI*2,false);
+         c.strokeStyle='red';
+         c.stroke();
+         c.beginPath();
+         c.arc(140,140,20,0,Math.PI*2,false);
+         c.strokeStyle='blue';
+         c.stroke();
+         var logoimg = new Image();
+         logoimg.src = 'logo0.png';
+         //图片加载完后，将其显示在canvas中
+         logoimg.onload = function(){
+             c.drawImage(this, 110, 110,60,60);
+             // context.drawImage(this, 0, 0, 1080, 980)改变图片大小到1080*980
+         }
+
+
+
+
+
+     })
+     function drawCoil(x1,y1,x2,y2,r) {
+         drawline(x1,y1,x2,y2,"#A26047",0.5);
+         c.beginPath();
+         c.strokeStyle = "#A26047";
+         c.arc(y1,y2,r,Math.PI/2,Math.PI,false);
+         c.stroke();
+
+
+     }
+     //显示内部
+     drawLabelFace.addEventListener("auxclick",function () {
+         drawLabelFace.innerText = "内";
+         //卡片四周
+         c.rect(100,100,300,200);
+         c.strokeStyle = 'grey';
+         c.stroke();
+         //线圈
+         //左
+         drawCoil(120,130,120,270,8.6);
+         // drawline(120,130,120,270,"#A26047",0.5);
+         // c.beginPath();
+         // c.strokeStyle = "#A26047";
+         // c.arc(130,270,8.6,Math.PI/2,Math.PI,false);
+         // c.stroke();
+         //下
+
+         drawline(370,280,130,280,"#A26047",0.5);
+         c.beginPath();
+         c.strokeStyle = "#A26047";
+         c.arc(130,130,8.6,Math.PI,Math.PI/2*3,false);
+         c.stroke();
+         //上
+         drawline(130,120,370,120,"#A26047",0.5);
+         c.beginPath();
+         c.strokeStyle = "#A26047";
+         c.arc(370,130,8.6,Math.PI/2*3,Math.PI*2,false);
+         c.stroke();
+         //右
+         drawline(380,130,380,200,"#A26047",0.5);
+         drawline(380,270,380,230,"#A26047",0.5);
+         //
+         c.beginPath();
+         c.strokeStyle = "#A26047";
+         c.arc(370,270,8.6,0,Math.PI/2,false);
+         c.stroke();
+         //芯片
+         c.beginPath();
+         c.rect(370,200,20,30);
+         c.strokeStyle = 'gold';
+         c.stroke();
+
+
+
+
+     })
+
+
+ </script>
+
+
+
+ <!--<canvas id="rlCanvas"></canvas>
+<button onclick="drawlabel()">尝试一下</button>-->
+</body>
+</html>

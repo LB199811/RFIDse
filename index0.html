@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="CSS/main.css" type="text/css" />
+    <script type="text/javascript" src="JS/aside.js"></script>
+    <title>RFIDse</title>
+
+</head>
+<body>
+    <!--导航栏区域-->
+    <header>
+        <nav>
+            <span>
+                    <i>RFIDse</i>
+            </span>
+        </nav>
+    </header>
+
+    <!-- 关于-->
+    <div class="blur" >
+
+        <div class="aboutRFIDse">
+            <img id="close" src="images/close.png" alt="关闭">
+            <h1>关于 <em>RFIDse</em></h1><br>
+            <div class="afRight">
+                <p>版本号：</p>
+                <p>开发者：</p>
+                <p>日期：</p>
+            </div>
+            <div class="afLeft">
+                <p>v0.1</p>
+                <p>李斌 胡宏宇</p>
+                <p>2021.3.19</p>
+            </div>
+
+        </div>
+    </div>
+    <!--内容显示区域-->
+    <main>
+        <ul id="secitem">
+
+            <li id="first" >初识RFID</li>
+            <li id="label">标签</li>
+            <li id="reader">读卡器</li>
+            <li id="storgeStructure">存储结构</li>
+            <li id="interProcess">交互过程</li>
+            <li id="backManage">后台管理</li>
+            <li id="dataManage">数据管理</li>
+
+
+        </ul>
+        <div id="banner">
+            <section>
+                <div><img src="images/RFID1.png" alt="初步认识"/></div>
+                <div><img src="images/RFID2.png" alt="饭卡"></div>
+                <div><img src="images/RFID4.png"></div>
+                <div><img src="images/reader.png"></div>
+            </section>
+            <ul id="banlight">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+            </ul>
+        </div>
+
+    <!--侧边描述-->
+        <aside>
+            <h1>使用说明</h1>
+            <p id="des"><i>RFIDse</i>用于在学习RFID课程过程中的辅助使用，在此做相关的实验，加深对知识的理解。点击左边导航栏的实验名称，获得实验详情信息，读懂实验，然后点击开始</p>
+            <button id="start" value="">→开始</button>
+        </aside>
+
+
+    </main>
+    <!--网页信息相关-->
+    <footer>
+        <p ><em>RFIDse</em> 将是西华大学实验教学共享平台的一部分。</p>
+        <p ><em>RFIDse</em> 推荐使用chrome内核浏览器访问。</p>
+        <a class="about" href="#"><p>关于 <em>RFIDse</em></p></a>
+        <p>By LB199811、胡宏宇</p>
+
+    </footer>
+    <script type="text/javascript">
+        var blur =document.querySelector(".blur");
+        var about =document.querySelector(".about");
+        var close = document.querySelector("#close");
+        close.onclick = function (){
+            blur.style.display = "none";
+        }
+        about.onclick = function () {
+            blur.style.display = "flex";
+        }
+
+    </script>
+</body>
+</html>

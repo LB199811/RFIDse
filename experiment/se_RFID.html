@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>实验-RFID</title>
+    <style>
+        * {
+            --bg: white;
+            --gbc: #005bc3;
+            --gbchover: #68b92e;
+            --fontc: #333330;
+            font-family: 华文宋体;
+        }
+
+        .videoRegion {
+            display: flex;
+            height: 500px;
+            justify-self: center;
+            justify-items: center;
+            align-self: center;
+        }
+
+        .video {
+            flex: 4;
+            height: auto;
+            border: 3px solid var(--gbc);
+            border-radius: 6px;
+        }
+
+        #v1, #v2 {
+            margin: 5px;
+            /*border: none;*/
+        }
+
+        #v1:hover, #v2:hover {
+            border-right: 15px solid var(--gbc);
+        }
+
+        .videox {
+
+            flex: 1;
+            border: 3px solid #CCCCCC;
+            border-radius: 6px;
+            margin-left: 5px;
+        }
+
+        .test {
+            display: block;
+            color: var(--fontc);
+            margin-top: 5px;
+            /*padding-right: ;*/
+            background: var(--bg);
+            padding: 6px 6px 6px 30px;
+            text-align: left;
+            border: 3px solid var(--gbc);
+            border-radius: 3px;
+            font-size: 25px;
+            align-content: center;
+        }
+
+        .testTable {
+            margin: 0 auto;
+            border: 5px solid var(--gbc);
+        }
+
+        tbody {
+            border: 5px solid var(--gbc);
+        }
+
+        table, td {
+            border: 1px solid var(--gbc);
+            border-collapse: collapse;
+            height: 30px;
+        }
+
+        textarea {
+            resize: none;
+            border-right: none;
+            border-top: none;
+            border-left: none;
+            border-bottom: 3px solid var(--gbc);
+            height: 25px;
+            max-width: 600px;
+            width: 50px;
+            columns: 20px 12;
+            font-family: 楷体;
+            font-size: 25px;
+            offset: 6px;
+            /*outline: none;*/
+            max-lines: 1;
+            overflow: hidden;
+            color: var(--gbchover);
+            outline-style: 3px solid var(--gbchover);
+
+            content: "dai";
+            text-align: center;
+
+            /*outline-color: var(--gbc);
+             border: none;
+            outline-style: dashed;*/
+        }
+
+        textarea:hover {
+            border-bottom: 3px solid var(--gbchover);
+        }
+
+        textarea:focus {
+            border-bottom: 3px solid var(--gbchover);
+        }
+        /*选择题区域*/
+        .selectRegion {
+            margin-left: 2em;
+        }
+        /*选项区域*/
+        .ABCD {
+            margin-left: 1em;
+        }
+        /*选择题radio样式*/
+        .radio {
+            margin: 0.5rem;
+        }
+
+        .radio input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .radio input[type="radio"] + .radio-label:before {
+            content: '';
+            background: #f4f4f4;
+            border-radius: 100%;
+            border: 1px solid #b4b4b4;
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            position: relative;
+            /*top: -0.2em;*/
+            margin-right: 1em;
+            vertical-align: top;
+            cursor: pointer;
+            text-align: center;
+            -webkit-transition: all 250ms ease;
+            transition: all 250ms ease;
+        }
+
+        .radio input[type="radio"]:checked + .radio-label:before {
+            background: black;
+            box-shadow: inset 0 0 0 4px #f4f4f4;
+
+        }
+
+        .radio input[type="radio"]:hover + .radio-label:before {
+            background-color: var(--gbchover);
+            box-shadow: inset 0 0 0 4px #f4f4f4;
+
+        }
+
+        .radio input[type="radio"]:focus + .radio-label:before {
+            outline: none;
+            border-color: #3197EE;
+        }
+
+        .radio input[type="radio"]:disabled + .radio-label:before {
+            box-shadow: inset 0 0 0 4px #f4f4f4;
+            border-color: #b4b4b4;
+            background: #b4b4b4;
+        }
+
+        .radio input[type="radio"] + .radio-label:empty:before {
+            margin-right: 0;
+        }
+        /*填空题区域*/
+        .fillregion {
+            margin-left: 2em;
+        }
+
+        .check{
+            width: 30px;
+            height: 30px;
+            border-radius: 30px;
+            color: white;
+            float: right;
+            background: #4183C4;
+            cursor: pointer;
+        }
+
+        /*.textareaFinished{
+            border: none;
+            resize: none;
+            outline: none;
+            offset: 6px;
+            font-size: 25px;
+            height: 25px;
+            font-family: 楷体;
+            overflow: hidden;
+            color: var(--gbchover);
+        }
+        .selector{
+            display: inline-block;
+            height: 40px;
+            width: 40px;
+            text-align: center;
+            cursor: pointer;
+            background: var(--gbc);
+            border-radius: 40px;
+            margin: 3px;
+            color: var(--fontc);
+        }
+        .selector:hover{
+            background: var(--gbchover);
+        }
+        .selector:focus{
+            background: #68b92e;
+        }*/
+    </style>
+    <script>
+
+
+    </script>
+</head>
+<body>
+
+<!--    <iframe src="//player.bilibili.com/player.html?aid=39453954&bvid=BV1jt41167Mc&cid=69321381&page=1&danmaku=0&high_quality=1" style="width: 90vw;height: 500px;justify-content: center"></iframe>
+    1.src="//player.bilibili.com/player.html?aid=39453954&bvid=BV1jt41167Mc&cid=69321381&page=1&danmaku=0&high_quality=1"
+            2.//player.bilibili.com/player.html?aid=39453954&bvid=BV1jt41167Mc&cid=69321381&page=1&danmaku=0&high_quality=1
+            //player.bilibili.com/player.html?aid=34229759&bvid=BV17t411o7km&cid=59959975&page=1&danmaku=0&high_quality=1
+-->
+<!--   视频讲解区域     -->
+<div class="videoRegion">
+    <iframe class="video" src=""></iframe>
+    <div class="videox">
+        <span>仔细查看以下视频，了解RFID 技术。</span>
+        <div>
+            <iframe id="v1"
+                    src="//player.bilibili.com/player.html?aid=34229759&bvid=BV17t411o7km&cid=59959975&page=1&danmaku=0&high_quality=1&allowfullscreen=true"></iframe>
+        </div>
+        <div>
+            <iframe id="v2"
+                    src="//player.bilibili.com/player.html?aid=39453954&bvid=BV1jt41167Mc&cid=69321381&page=1&danmaku=0&high_quality=1"></iframe>
+        </div>
+    </div>
+</div>
+
+<!-- 随堂测验 -->
+
+<div class="test">
+
+    <!-- <table class="testTable">
+         <thead style="text-align: center"><h1>RFID基础知识测验</h1></thead>
+         <tbody>
+             <tr>
+                 <td>填空题</td>
+                 <td>选择题</td>
+                 <td>总分</td>
+             </tr>
+             <tr>
+                 <td> </td>
+                 <td> </td>
+             </tr>
+         </tbody>
+
+
+     </table>-->
+    <h1>RFID基础知识测验</h1>
+    <script>
+        var rightitem = ["B. 产品电子代码","B.它采用标准CMOS工艺，技术简单"];
+            var rightAnswer = ["射频识别技术","Radio Frequency Identification",
+            "射频","耦合","无",
+            "读卡器","应用系统软件","标签",
+            "读卡器","天线","标签",
+            "EPC",
+            "PICC","PCD",];
+        // var tar = document.querySelectorAll("textarea");
+        var rl = document.querySelectorAll(".radio-label");
+        // console.log(tar);
+        function isRight() {
+
+        }
+
+    </script>
+    <div class="check" onclick="isRight()">√</div>
+
+    <div class="select">
+        <h2>一、选择题</h2>
+        <!-- ．ElectronicProductCode最正确的释义是哪一个？【B】
+
+         A．电子产品代码
+
+         B．产品电子代码
+
+         C．自动识别
+
+         D．编码体系-->
+        <div class="selectRegion">
+            <div>
+                <span>1. ElectronicProductCode最正确的释义是哪一个？</span><br>
+                <div class="ABCD">
+                    <div class="radio">
+                        <input id="radio-1" name="1" type="radio">
+                        <label for="radio-1" class="radio-label">A. 电子产品代码</label>
+                    </div>
+                    <div class="radio">
+                        <input id="radio-2" name="1" type="radio">
+                        <label for="radio-2" class="radio-label">B. 产品电子代码</label>
+                    </div>
+                    <div class="radio">
+                        <input id="radio-3" name="1" type="radio">
+                        <label for="radio-3" class="radio-label">C. 自动识别</label>
+                    </div>
+                    <div class="radio">
+                        <input id="radio-4" name="1" type="radio">
+                        <label for="radio-4" class="radio-label">D. 编码体系</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <span>2. 下列哪一项不是低频RFID系统的特点?</span><br>
+            <div class="ABCD">
+                <div class="radio">
+                    <input id="radio-5" name="2" type="radio">
+                    <label for="radio-5" class="radio-label">A.它遵循的通信协议是ISO18000-3</label>
+                </div>
+                <div class="radio">
+                    <input id="radio-6" name="2" type="radio">
+                    <label for="radio-6" class="radio-label">B.它采用标准CMOS工艺，技术简单</label>
+                </div>
+                <div class="radio">
+                    <input id="radio-7" name="2" type="radio">
+                    <label for="radio-7" class="radio-label">C.它的通信速度低</label>
+                </div>
+                <div class="radio">
+                    <input id="radio-8" name="2" type="radio">
+                    <label for="radio-8" class="radio-label">D.它的识别距离短(<10cm)</label>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!--<label>
+            <div class="radio"><input type="radio" name="1" checked /></div>A. 电子产品代码<br>
+            <input type="radio" name="1" />B. 产品电子代码<br>
+            <input type="radio" name="1" />C. 自动识别<br>
+            <input type="radio" name="1" />A. 编码体系<br>
+        </label>-->
+        <!--<div class="selector">A</div>电子产品代码<br>
+        <div class="selector">B</div>产品电子代码<br>
+        <div class="selector">C</div>自动识别<br>
+        <div class="selector">D</div>编码体系<br>-->
+    </div>
+    <div class="fill">
+        <h2>二、填空题</h2>
+        <div class="fillregion">
+            <div>1. RFID的全称是
+                <label>
+                    <textarea id="ta0"></textarea>,
+                </label>英文全称是
+                <label>
+                    <textarea></textarea>,
+                </label>。
+            </div>
+            <div>2.RFID技术是20世纪90年代开始兴起的一项自动识别技术，即利用<label>
+                <textarea></textarea>
+            </label>信号通过空间<label>
+                <textarea></textarea>,
+            </label>（交变磁场或电磁场）实现<label>
+                <textarea></textarea>,
+            </label>接触信息传递并通过所传递的信息达到识别目的的技术。
+            </div>
+            <div>3. RFID系统通常由
+                <label>
+                    <textarea></textarea>、
+                    <textarea></textarea>、
+                    <textarea></textarea>
+                </label>
+                组成。
+            </div>
+            <div>4. 电子标签按照天线的类型不同可以划分为
+            <label>
+                <textarea></textarea>、
+                <textarea></textarea>、
+                <textarea></textarea>
+            </label>。
+            </div>
+            <div>5. 国际标准（国际物品编码协会GS1），射频识别标签数据规范1.4版（英文版），也简称
+                <label>
+                    <textarea></textarea>规范。
+                </label>
+            </div>
+            <div>6. ISO14443中将标签称为邻近卡，英语简称是
+                <label>
+                    <textarea></textarea>，将读写器称为邻近耦合设备，英文简称是
+                    <textarea></textarea>。
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var video = document.querySelector(".video");
+    var v1 = document.getElementById("v1");
+    var v2 = document.getElementById("v2");
+    var ta = document.querySelectorAll("textarea");
+
+    var selctor = document.querySelectorAll(".selector");
+
+    var checker = document.querySelector(".check");
+    console.log(selctor);
+    var s1s = document.getElementsByName("1");
+    var s2s = document.getElementsByName("2");
+    console.log(s1s);
+
+
+    function isRight() {
+        var flag = 0;
+        //正确与错误应该做出相应标注
+        var style = document.createElement('style');
+        document.head.appendChild(style);
+        sheet = style.sheet;
+
+        //全对标识
+
+
+        console.log(rightAnswer[0]);
+        //判断填空题
+        for (var i = 0; i < ta.length; i++) {
+            if (ta[i].value === rightAnswer[i]) {
+                ta[i].style.color = "var(--gbchover)";
+                flag = flag + 1;
+            } else {
+                ta[i].style.color = "red";
+            }
+        }
+        console.log(s1s);
+        //判断选择题
+        if (s1s[1].checked && s2s[1].checked) {
+            //正确选项绿色标注
+            sheet.addRule('.radio input[type="radio"]:checked + .radio-label:before {background: var(--gbchover);');
+            sheet.insertRule('radio input[type="radio"]:checked + .radio-label:before {background: var(--gbchover);');
+            console.log("123");
+            //
+            flag = flag + 2;
+            //其他选项disabled
+            s1s[0].disabled = true;
+            s1s[2].disabled = true;
+            s1s[3].disabled = true;
+            s2s[0].disabled = true;
+            s2s[2].disabled = true;
+            s2s[3].disabled = true;
+        } else {
+            console.log("0000");
+            //错误的话将所选项标注为红色
+            for (var j = 0; j <= s1s.length; j++) {
+                for (var k = 0; k <= s2s.length; k++) {
+                    if (s1s[j].checked === true) {
+                        sheet.addRule('.radio input[type="radio"]:checked + .radio-label:before {background: red;');
+                        sheet.insertRule('radio input[type="radio"]:checked + .radio-label:before {background: red;');
+                    }
+                    if (s2s[k].checked === true) {
+                        sheet.addRule('.radio input[type="radio"]:checked + .radio-label:before {background: red;');
+                        sheet.insertRule('radio input[type="radio"]:checked + .radio-label:before {background: red;');
+                    }
+                }
+            }
+        }
+        //checker
+        console.log(flag)
+        if(flag === 16){
+
+            // checker.setAttribute("onclick","");
+            checker.innerText = "→";
+            checker.onclick = ToTag;
+
+        }else {
+            checker.innerText = "×";
+        }
+    }
+    function ToTag(){
+        var experimentRegion = parent.document.querySelector(".experimentRegion");
+        experimentRegion.removeAttribute("src");
+        // experimentRegion.setAttribute("src","experiment/se1_Label.html");
+        var description = parent.document.querySelector(".description");
+        var title = parent.document.querySelector("title");
+        console.log(title);
+        // title.innerText = "实验 - 标签";
+        description.setAttribute("src","experimentDoc/tag.html");
+        var ename =parent.document.getElementById("ename");
+        // ename.innerText = "标签";
+        // window.open("se1_Label.html");
+    }
+
+
+    window.onload = function () {
+        //准备工作
+
+        //去掉bl下方的logo栏
+        //document.getElementsByClassName("bilibili-player-video-sendjumpbar").remove();
+
+        //分别点击v1，v2右侧，主屏幕显示信息
+        v1.addEventListener("click", function () {
+            v1.removeAttribute("style");
+            v2.removeAttribute("style");
+            video.removeAttribute("style");
+            video.setAttribute("src", "//player.bilibili.com/player.html?aid=34229759&bvid=BV17t411o7km&cid=59959975&page=1&danmaku=0&high_quality=1");
+            v1.style.borderRight = "10px solid var(--gbchover)";
+
+            video.setAttribute("style", "border:3px solid var(--gbchover)");
+            //video.style.border = "3px solid var(--gbchover);"
+            console.log(video);
+        })
+        v2.addEventListener("click", function () {
+            v1.removeAttribute("style");
+            v2.removeAttribute("style");
+            video.setAttribute("src", "//player.bilibili.com/player.html?aid=39453954&bvid=BV1jt41167Mc&cid=69321381&page=1&danmaku=0&high_quality=1");
+            v2.style.borderRight = "10px solid var(--gbchover)";
+            video.setAttribute("style", "border:3px solid var(--gbchover)");
+        })
+        //选择题选项
+
+
+        /*var rightAnswer = [["A.电子产品代码"],["B.它采用标准CMOS工艺，技术简单"],
+                            ["射频识别技术"],["Radio Frquency Identification"],
+                            ["射频"],["耦合"],["无"],
+                            ["读卡器"],["天线"],["标签"],
+                            ["读卡器"],["天线"],["标签"],
+                            ["EPC"],
+                            ["PICC"],["PCD"],];*/
+
+    }
+    //textare美化
+    // 有内容则下线去掉
+    console.log(ta.length);
+    for (var i = 0; i <= ta.length; i++) {
+        ta[i].addEventListener("change", function fill() {
+            this.style.border = "none";
+            this.style.background = "#eeeeee";
+            var w = (this.value.length) * 25;
+            this.style.width = w + "px";
+            //有内容然后将内容删除，应该退回到原先样式
+            if (this.value === "") {
+                this.style.borderTop = "none";
+                this.style.borderRight = "none";
+                this.style.borderLeft = "none";
+                this.style.borderBottom = "3px solid var(--gbc)"
+                this.style.background = "white";
+                this.style.width = "50px";
+
+            }
+        })
+        //开始向textarea中输入内容时
+        ta[i].oninput = function c() {
+            this.style.color = "black";
+        }
+
+        /*ta[i].onchange = function fill() {
+        this.style.border = "none";
+        this.style.background = "#eeeeee";
+        var w = (this.value.length )* 30;
+        this.style.width = w + "px";
+        //有内容然后将内容删除，应该退回到原先样式
+        if (this.value === "") {
+            this.style.borderTop = "none";
+            this.style.borderRight = "none";
+            this.style.borderLeft = "none";
+            this.style.borderBottom = "3px solid var(--gbc)"
+            this.style.background = "white";
+            this.style.width = "50px";
+        }
+    }*/
+    }
+
+
+
+
+</script>
+</body>
+</html>

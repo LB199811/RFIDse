@@ -1,0 +1,58 @@
+/*全局属性*/
+*{
+    margin: 0 auto;
+    --gbc: #005bc3;
+
+}
+*::selection{
+    color: #68b92e;
+}
+nav{
+    background:  var(--gbc);
+    height: 50px;
+    z-index: 1;
+
+}
+#ename{
+    padding: 10px;
+    font-size: large;
+    color: white;
+    position: fixed;
+}
+main{
+    display: flex;
+    flex-direction: row;
+}
+.description{
+    flex: 1;
+    /*background: #f5f5d5;*/
+    color:  var(--gbc);
+    padding: 6px;
+    /*width: 300px;*/
+    font-size: x-large;
+    border: 2px solid  var(--gbc);
+    border-bottom: 5px solid  var(--gbc);
+    scrollbar-base-color: #68b92e;
+}
+
+.resize-bar{
+    background: #70a1ff;
+    width:6px;
+
+    color: red;
+    border-bottom:5px solid  var(--gbc);
+}
+.resize-bar:hover{
+    cursor: e-resize;
+
+}
+.experimentRegion {
+    flex: 3;
+    /*background: #f5f5d5;*/
+    background: white;
+    color:  var(--gbc);
+    padding: 10px;
+    font-size: x-large;
+    border: 2px solid  var(--gbc);
+    border-bottom: 5px solid  var(--gbc);
+}

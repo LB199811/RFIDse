@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>RFIDse</title>
+</head>
+
+<script type="text/javascript">
+    function about(){
+
+        window.alert("power by zzz")
+    }
+</script>
+<style>
+    body{
+        margin:0px;
+        height: 100vh;
+        width:100vw;
+    }
+    #nav{
+        margin:0 auto;
+        text-align: center;
+        height: 54px;
+        font-size: 50px;
+        background: #1dd1a1;
+    }
+    a{
+        text-decoration: none;
+        color: aqua;
+
+    }
+
+    img{
+        margin-right: 0;
+        height: 45px;
+        width:45px;
+
+    }
+    #can{
+        width:60vw;
+        height: 70vh;
+        display:inline-block;
+        margin: 0 auto;
+        border:2px solid red;
+        border-radius: 10px;
+        background: #1dd1a1;
+    }
+    #experiment{
+        display: inline-block;
+        position: fixed;
+        margin-top: 5px;
+        left:5px;
+        text-align: center;
+        animation-name: labelandreader;
+    }
+    ul{
+        display: inline-block;
+        background: #1dd1a1;
+        width: 150px;
+        border:2px solid red;
+        border-radius: 5px;
+        list-style: none;
+        margin-left:5px;
+        text-align: center;
+    }
+    li{
+        border-bottom:3px solid red;
+        height:30px;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+    }
+    li:hover{
+        background: red;
+
+    }
+    button{
+        position: fixed;
+        right:0;
+        bottom:0;
+    }
+    @keyframes labelandreader {
+        from{
+            background: aliceblue;
+        }
+        to{
+            background: red;
+        }
+    }
+</style>
+<body>
+    <!--导航栏-->
+    <div id=nav >
+        <a style="position: fixed;left: 2px;">≡</a>
+        <a href="http://www.baidu.com"><img src="logo0.png"></a>
+        <a href="#nav" style="font-size: 50px" target="_self" >RFIDse</a>
+        <a onclick="about()" style="position:fixed;right:2px;" >···</a>
+    </div>
+    <!---->
+    <div id=experiment>
+        <ul >
+            <li >初步认识</li>
+            <li>饭卡</li>
+
+
+        </ul>
+        <!--画布：标签和读卡器-->
+        <canvas id="can" height="500px"
+                width="1000px" ></canvas>
+    </div>
+    <!--画标签和读卡器-->
+    <script type="text/javascript" >
+        //获取canvas标签
+        var canvas = document.querySelector("#can");
+        //获取上下文对象
+        var c = canvas.getContext('2d');
+        //卡片四周
+        c.rect(100,100,300,200);
+        c.strokeStyle = '#74b9ff';
+        c.stroke();
+
+        drawline(100,175,400,175,'grey',2);
+
+        //封面
+        var faceimg = new Image();
+        faceimg.src = 'labelface.jpg';
+        faceimg.onload = function(){
+            c.drawImage(this,100,175,300,125);
+        }
+        //西华大学汉字
+        c.font='40px kaiti ';
+        c.fillText('西华大学',170,150);
+        //xhu
+        c.font='15px Times'
+        c.fillText('Xihua Univeristy',170,170);
+        //校园卡
+        c.font='20px songti'
+        c.fillText('校园卡',330,170);
+        //logo区域
+        c.beginPath();
+        c.arc(140,140,30,0,Math.PI*2,false);
+        c.strokeStyle='red';
+        c.stroke();
+        c.beginPath();
+        c.arc(140,140,20,0,Math.PI*2,false);
+        c.strokeStyle='blue';
+        c.stroke();
+        var logoimg = new Image();
+        logoimg.src = 'logo0.png';
+        //图片加载完后，将其显示在canvas中
+        logoimg.onload = function(){
+            c.drawImage(this, 110, 110,60,60);
+            // context.drawImage(this, 0, 0, 1080, 980)改变图片大小到1080*980
+        }
+
+
+
+
+        function drawline(x1,y1,x2,y2,color,width){
+            c.beginPath();
+            c.moveTo(x1,y1);
+            c.lineTo(x2,y2);
+            c.lineWidth = width
+            c.strokeStyle = color;
+            c.stroke();
+            c.closePath();
+        }
+
+    </script>
+
+</body>
+</html>

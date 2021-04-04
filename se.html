@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实验-RFID</title>
+    <link rel="stylesheet" href="CSS/se.css" type="text/css"/>
+    <script type="text/css" src="JS/se.js" ></script>
+    <script src="JS/jQuery.min.js"></script>
+</head>
+<body>
+<!--<script>
+    var sename = document.getElementsByTagName('title');
+    sename.namedItem('实验_初步认识');
+</script>-->
+    <nav>
+        <em id="ename"> </em>
+    </nav>
+
+    <main>
+        <iframe class="description" title="describe" src="" >
+
+        </iframe>
+        <div class="resize-bar"></div>
+        <iframe class="experimentRegion" title=" experiment" name="er" src=""></iframe>
+
+        <!--<div class="description">
+            <h1>实验名称</h1>
+
+        </div>
+        <div class="resize-bar"></div>
+
+        <div class="experimentRegion">
+        </div>-->
+
+    </main>
+<script>
+
+    //实验说明
+    var description = document.querySelector('.description');
+    //实验操作区域
+    var experiemtnRegion = document.querySelector('.experimentRegion');
+    //导航栏
+    var nav = document.querySelector('nav');
+    //
+    var main = document.querySelector('main');
+    //
+
+        main.style.height= window.innerHeight - nav.offsetHeight + 'px';
+
+    /*description.style.height = window.outerHeight - 3 * nav.offsetHeight + 'px';
+    console.log(window.innerHeight)
+    console.log(nav.offsetHeight);
+    // description.style.width = window.innerWidth*(1/4) + 'px';
+    experiemtnRegion.style.height = window.outerHeight  - 3 *  nav.clientHeight +'px';
+    // experiemtnRegion.style.width = window.innerWidth*(3/4) + 'px';*/
+
+    //中间调整大小的控件
+
+    let resize_bar = document.querySelector('.resize-bar');
+    //双击隐藏实验说明
+    resize_bar.addEventListener('dblclick',function () {
+
+        description.style.display='none';
+    });
+    //隐藏后打击取消隐藏
+    resize_bar.addEventListener('click',function () {
+
+        description.style.display='block';
+    });
+
+    //点击开始实验
+    window.onload =function (){
+        description.setAttribute("src","experimentDoc/RFID.html");
+        // experiemtnRegion.setAttribute("src","welcome.html");
+    }
+
+    /*resize_bar.addEventListener('drag',function () {
+        experiemtnRegion.
+        alert(resize_bar.clientWidth);
+    });*/
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+*{
+    margin: 0 auto;
+    --gbc : #005bc3;
+    --gbchover:  #68b92e;
+    font-family: 华文宋体;
+}
+*::selection{
+    color: #68b92e;
+}
+/*导航栏*/
+nav{
+    background: white;
+    height:50px;
+    background: var(--gbc);
+
+
+}
+span{
+    font-size: 46px;
+    color: #ffffff;
+
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+    position:absolute;
+    left:0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+}
+
+
+span:hover{
+    color: var(--gbchover);
+    font-family: "Times New Roman";
+    cursor: pointer;
+}
+/*
+nav ul{
+    list-style: none;
+
+}
+nav li{
+    font-size: 45px;
+    color: #ffffff;
+}
+nav li:hover{
+    color: var(--gbchover);
+    font-family: "Times New Roman";
+    cursor: pointer;
+}*/
+/*主要内容*/
+main{
+    display: flex;
+    margin-top: 15px;
+    position: relative;
+}
+#secitem{
+    color: #ffffff;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 200px;
+    margin: 0 auto;
+    padding:3px;
+    list-style: none;
+    background:  var(--gbc);
+    border:3px solid white;
+    border-radius: 6px;
+}
+#secitem li{
+    height: 30px;
+}
+#secitem li:hover{
+    background:  var(--gbc);
+    border-radius: 5px;
+    height: 60px;
+    color: var(--gbchover);
+    cursor:pointer ;
+    font-size: 45px;
+}
+#banner{
+    width:900px;
+    height:670px;
+    align-self: center;
+    overflow: hidden;
+}
+#banlight{
+    position: absolute;
+    left: 50%;
+    width: 200px;
+    bottom: 60px;
+
+    opacity: inherit;
+    transform: translateX(-50%);
+    display: grid;
+    grid-template: 1fr/repeat(4,1fr);
+    list-style: none;
+}
+#banlight::after{
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background:  var(--gbc);
+    position: absolute;
+    left:55px;
+    top:0;
+    z-index: -1;
+    animation-name: numlight;
+    animation-duration: 4s;
+    animation-timing-function: steps(4,end);
+    animation-iteration-count: infinite;
+}
+#banlight li{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.3);
+    color: white;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+section{
+    width:3600px;
+    height: 670px;
+
+    display: grid;
+    grid-template: 1fr/repeat(4,900px);
+    animation-name: slide;
+    animation-duration: 4s;
+    animation-timing-function: steps(4,end);
+    animation-iteration-count: infinite;
+}
+section:hover,section:hover+#banlight::after {
+    animation-play-state: paused;
+}
+section div{
+    overflow: hidden;
+}
+
+main img{
+    width: 100%;
+    height: 100%;
+}
+@keyframes slide {
+   to{
+       transform: translateX(-3600px);
+   }
+}
+@keyframes numlight {
+    to{
+        transform: translateX(200px);
+    }
+}
+aside{
+    color:white;
+    padding: 5px;
+    background:  var(--gbc);
+    width: 200px;
+    border:3px solid white;
+    border-radius: 6px;
+}
+aside h1{
+    margin:5px;
+}
+#des{
+    margin: 5px ;
+}
+#start{
+    margin-top: 10px;
+}
+aside button{
+    background:  var(--gbc);
+    color:white;
+    border: none;
+    font-size: larger;
+    cursor: pointer;
+}
+button:hover{
+    color: #68b92e;
+    font-size: 45px;
+}
+/*底部*/
+footer{
+    margin-top: 15px ;
+    background:  var(--gbc);
+}
+footer p{
+
+    text-align: center;
+    color: white;
+}
+footer a{
+   color: white;
+    text-decoration: none;
+}
+
+footer a:hover{
+    color: var(--gbchover);
+
+}
+.blur{
+    position: absolute;
+
+    background-color: rgba(0,0,0,.6);
+    top:0;
+    right:0;
+    bottom:0;
+    left: 0;
+    z-index: 10;
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+}
+.blur img{
+    width: 10%;
+    height: 10%;
+    cursor: pointer;
+
+}
+.aboutRFIDse{
+    width: 300px;
+    height: 260px;
+    background: white;
+    color: var(--gbc);
+    padding: 30px;
+    display: block;
+    border-radius: 6px;
+    text-align: center;
+
+
+}
+.aboutRFIDse p{
+    font-size: 25px;
+    font-family: 楷体;
+    border: 0;
+    margin-bottom:3px ;
+}
+.aboutRFIDse p:nth-child(odd){
+    background: #dbd9d9;
+}
+.afRight{
+    display: inline-block;
+    border-right: 1px solid #70a1ff;
+
+}
+.afLeft{
+    display: inline-block;
+
+
+}
